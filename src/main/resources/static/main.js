@@ -6,7 +6,7 @@ const userFetch = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Referer': null
     },
-    getAllUsers: async () => await fetch('api'),
+    getAllUsers: async () => await fetch('api/users'),
     getUserByUsername: async () => await fetch(`api/users/name`),
     getUserById: async (id) => await fetch(`api/users/` + id),
     addUser: async (user) => await fetch('api/users', {method: "POST", headers: userFetch.head, body: JSON.stringify(user)}),
@@ -120,6 +120,7 @@ function updateUser() {
     let password = document.getElementById('editPassword').value;
     let role = addRoles(document.getElementById('editRoles').value);
     let user = {
+        id:id,
         name:name,
         age:age,
         surname:surname,
@@ -172,7 +173,7 @@ function deleteUserById() {
 function getRoles(list) {
     let userRoles = [];
     for (let role of list) {
-        if (role.name == "ROLE_ADMIN") {
+        if (role.role == "ROLE_ADMIN") {
             userRoles.push(" ADMIN");
         }
     }

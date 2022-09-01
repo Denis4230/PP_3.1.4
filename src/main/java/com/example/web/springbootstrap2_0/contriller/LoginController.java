@@ -24,7 +24,7 @@ public class LoginController {
         return "error";
     }
 
-    @GetMapping("/api")
+    @GetMapping("/")
     public String getPage() {
         return "admin";
     }
