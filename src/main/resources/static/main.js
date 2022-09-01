@@ -6,7 +6,7 @@ const userFetch = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Referer': null
     },
-    getAllUsers: async () => await fetch('api/users'),
+    getAllUsers: async () => await fetch('api'),
     getUserByUsername: async () => await fetch(`api/users/name`),
     getUserById: async (id) => await fetch(`api/users/` + id),
     addUser: async (user) => await fetch('api/users', {method: "POST", headers: userFetch.head, body: JSON.stringify(user)}),

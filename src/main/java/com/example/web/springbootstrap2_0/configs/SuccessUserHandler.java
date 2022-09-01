@@ -19,6 +19,6 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException {
 
-        httpServletResponse.sendRedirect("/");
+        httpServletResponse.sendRedirect("/api");
     }
 }
