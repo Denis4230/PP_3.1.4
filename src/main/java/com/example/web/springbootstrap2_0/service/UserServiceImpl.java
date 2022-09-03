@@ -1,6 +1,7 @@
 package com.example.web.springbootstrap2_0.service;
 
 
+import com.example.web.springbootstrap2_0.model.Role;
 import com.example.web.springbootstrap2_0.model.User;
 import com.example.web.springbootstrap2_0.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -35,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     public User saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(user.getRoles().isEmpty()) {
+            user.getRoles().add(new Role("ROLE_USER"));
+        }
 
         return userRepository.save(user);
     }

@@ -31,9 +31,9 @@
     <div class="row" style="margin: 0px; height: 100vh; position: relative;">
         <div class="col-2" style="position: absolute; left: 0; height: 100%;  padding-top: 10px; padding-right: 0px;">
             <div class="list-group list-group-flush" id="myList" role="tablist">
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="list-group-item list-group-item-action" data-toggle="list" href="#adminPanel"
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="list-group-item list-group-item-action" data-toggle="list" id="adminPanelTab" href="#adminPanel"
                    role="tab">Admin</a>
-                <a class="list-group-item list-group-item-action" data-toggle="list" href="#userPanel"
+                <a class="list-group-item list-group-item-action" data-toggle="list" id="userPanelTab"  href="#userPanel"
                    role="tab">User</a>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     <ul class="nav nav-tabs" id="admintab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="userstable-tab" data-toggle="tab" href="#userstable"
-                               role="tab" aria-controls="userstable" aria-selected="true">Users table</a>
+                               role="tab" aria-controls="userstable"  aria-selected="true">Users table</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="newuser-tab" data-toggle="tab" href="#newuser" role="tab"
@@ -55,7 +55,9 @@
                     </ul>
 
                     <div sec:authorize="hasRole('ROLE_ADMIN')" class="tab-content">
-                        <div class="tab-pane active" id="userstable" role="tabpanel"
+                        <div class="tab-pane active collapse multi-collapse"
+                             id="userstable"
+                             role="tabpanel"
                              aria-labelledby="userstable-tab">
                             <div class="card" style="border-color: rgb(211, 209, 209);">
                                 <div class="card-header">
@@ -108,11 +110,12 @@
                                                         <div class="form-group" style="text-align: center;">
                                                             <label><h5>Roles</h5></label>
                                                             <select class="form-control form-control-sm"
-                                                                    multiple size="2" id="editRoles" required>
-<!--                                                                <option value="ROLE_ADMIN">ADMIN</option>-->
-<!--                                                                <option value="ROLE_USER">USER</option>-->
-                                                                <option>ADMIN</option>
-                                                                <option>USER</option>
+                                                                    multiple size="2"
+                                                                    id="editRoles" required>
+                                                                <option value="ROLE_ADMIN">ADMIN</option>
+                                                                <option value="ROLE_USER">USER</option>
+<!--                                                                <option>ADMIN</option>-->
+<!--                                                                <option>USER</option>-->
                                                             </select>
                                                         </div>
                                                     </form>
@@ -166,7 +169,10 @@
                                                     <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Close
                                                     </button>
-                                                    <button type="submit" data-dismiss="modal" class="btn btn-danger" onclick="deleteUserById()">
+                                                    <button type="submit"
+                                                            data-dismiss="modal"
+                                                            class="btn btn-danger"
+                                                            onclick="deleteUserById()">
                                                         Delete
                                                     </button>
                                                 </div>
@@ -204,12 +210,11 @@
                                             <select class="form-control"
                                                         multiple size="2" id="addRoles" name="listRoles"> required>
                                                 <option value="ROLE_ADMIN">ADMIN</option>
-                                                <option value="ROLE_USER">USER</option>
+                                                <option value="ROLE_USER" >USER</option>
                                             </select>
                                         </div>
                                         <br>
                                         <button type="button"
-                                                action="#"
                                                 class="btn btn-success"
                                                 id="addUser"
                                                 onclick="addUserData()">Add new user</button>

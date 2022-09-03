@@ -1,6 +1,7 @@
 package com.example.web.springbootstrap2_0.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,15 +23,12 @@ public class User {
     private String password;
 
 
-
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
 
     public User() {

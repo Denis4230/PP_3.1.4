@@ -39,6 +39,18 @@ function infoUser() {
                 <td>${stringRoles}</td>
                 <td>
             `;
+
+
+            let roles = user.roles;
+            for (let role of roles) {
+                if (role.role === "ROLE_ADMIN") {
+                    $("#adminPanelTab")[0].click();
+                    return;
+                }
+                if (role.role === "ROLE_USER") {
+                    $("#userPanelTab")[0].click();
+                }
+            }
         });
 }
 
@@ -69,20 +81,26 @@ function getUsers() {
 }
 
 function addUserData() {
+    let userRoles = [];
+    let roleOptions =document.querySelector('#addRoles').options;
+    for (let i = 0; roleOptions.length > i; i++) {
+        if (roleOptions[i].selected) {
+            userRoles.push({role: roleOptions[i].value})
+        }
+    }
     document.addEventListener('DOMContentLoaded', addUserData);
         let name = document.getElementById('addName').value;
         let age = document.getElementById('addAge').value;
         let surname = document.getElementById('addSurname').value;
         let username = document.getElementById('addUsername').value;
         let password = document.getElementById('addPassword').value;
-        let role = document.getElementById('addRoles').value;
         let user = {
             name:name,
             age:age,
             surname:surname,
             username:username,
             password:password,
-            roles: addRoles(role)
+            roles: userRoles,
         };
     userFetch.addUser(user).then(() => {
         document.getElementById('addName').value = ``;
@@ -93,7 +111,10 @@ function addUserData() {
         document.getElementById('addRoles').value = ``;
         document.getElementById('tableUsers').innerHTML = ``;
     }).then(() => getUsers());
+    $("#userstable-tab")[0].click();
+
 }
+
 
 function editUser(id) {
     userFetch.getUserById(id)
@@ -105,19 +126,29 @@ function editUser(id) {
                 $('#editSurname').val(user.surname)
                 $('#editUsername').val(user.username)
                 $('#editPassword').val("")
-                $('#editRoles').val(addRoles(user.roles))
             })
         })
 }
 
 function updateUser() {
+
+    let userRoles = [];
+    let roleOptions =document.querySelector('#editRoles').options;
+    console.log(roleOptions.length)
+    for (let i = 0; roleOptions.length > i; i++) {
+        console.log(roleOptions[i].value + ' : ' + roleOptions[i].selected)
+        if (roleOptions[i].selected) {
+            userRoles.push({role: roleOptions[i].value})
+        }
+    }
+
     let id = document.getElementById('editID').value;
     let name =  document.getElementById('editName').value;
     let age = document.getElementById('editAge').value;
     let surname = document.getElementById('editSurname').value;
     let username = document.getElementById('editUsername').value;
     let password = document.getElementById('editPassword').value;
-    let role = addRoles(document.getElementById('editRoles').value);
+
     let user = {
         id:id,
         name:name,
@@ -125,8 +156,11 @@ function updateUser() {
         surname:surname,
         username:username,
         password:password,
-        roles: addRoles(role)
+        roles: userRoles
     };
+    console.log(userRoles)
+    console.log(user)
+    console.log(JSON.stringify(user))
 
     userFetch.updateUserByID(user, id).then(() => {
         document.getElementById('editID').value = ``;
@@ -140,7 +174,7 @@ function updateUser() {
         getUsers();
     })
 }
-//ok
+
 function deleteUser(id) {
     userFetch.getUserById(id)
         .then(res => {
@@ -177,18 +211,8 @@ function getRoles(list) {
             userRoles.push(" ADMIN");
         }
     }
-        userRoles.push(" USER");
+    userRoles.push(" USER");
 
     return userRoles.join("  ");
 }
 
-function addRoles(role) {
-    let roles = [];
-    if (role === "ROLE_ADMIN"){
-        roles.push({role: "ROLE_ADMIN"});
-    }
-    if (role === "ROLE_USER") {
-        roles.push({role: "ROLE_USER"});
-    }
-    return roles;
-}
